@@ -1,1 +1,23 @@
-<p>reservation-form works!</p>
+<form
+  [formGroup]="reservationForm"
+  (ngSubmit)="onSubmit()"
+  class="my-5 max-w-2xl mx-auto p-4"
+>
+  <div class="my-3">
+    <label for="check-in-date">Check-In Date:</label>
+    <input type="date" formControlName="checkInDate" id="check-in-date" />
+  </div>
+  <div class="my-3">
+    <label for="check-out-date">Check-Out Date:</label>
+    <input type="date" formControlName="checkOutDate" id="check-out-date" />
+  </div>
+  <div class="my-3">
+    <label for="guest-name">Guest Name:</label>
+    <input type="text" formControlName="guestName" id="guest-name" />
+  </div>
+  <div class="my-3">
+    <label for="room-number">Room Number:</label>
+    <input type="number" formControlName="roomNumber" id="room-number" />
+  </div>
+  <button type="submit">Submit</button>
+</form>
