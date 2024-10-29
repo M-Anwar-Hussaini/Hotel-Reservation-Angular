@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReservationService } from '../reservation/reservation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation-form',
@@ -12,13 +13,18 @@ export class ReservationFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private router: Router
   ) {}
 
   onSubmit() {
     if (this.reservationForm.valid) {
-      const reservation = this.reservationForm.value;
+      const reservation = {
+        ...this.reservationForm.value,
+        id: Date.now().toString(),
+      };
       this.reservationService.addReservation(reservation);
+      this.router.navigate(['/list']);
     } else {
       console.log('Invalid');
     }
