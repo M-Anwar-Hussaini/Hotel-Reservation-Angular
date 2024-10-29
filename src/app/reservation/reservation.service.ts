@@ -5,10 +5,9 @@ import { JsonPipe } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
-export class ReservationService implements OnInit {
+export class ReservationService {
   private reservations: Reservation[] = [];
-
-  ngOnInit(): void {
+  constructor() {
     this.reservations = JSON.parse(
       localStorage.getItem('reservations') || '[]'
     );
@@ -23,6 +22,7 @@ export class ReservationService implements OnInit {
   }
 
   addReservation(reservation: Reservation): void {
+    reservation.id = Date.now().toString();
     this.reservations.push(reservation);
     localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
@@ -32,8 +32,11 @@ export class ReservationService implements OnInit {
     localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
 
-  updateReservation(reservation: Reservation): void {
-    const index = this.reservations.findIndex((r) => r.id === reservation.id);
+  updateReservation(id: string, reservation: Reservation): void {
+    const index = this.reservations.findIndex((r) => r.id === id);
+    if (index) {
+      reservation.id = id;
+    }
     this.reservations[index] = reservation;
     localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
