@@ -34,10 +34,12 @@ export class ReservationService {
 
   updateReservation(id: string, reservation: Reservation): void {
     const index = this.reservations.findIndex((r) => r.id === id);
-    if (index) {
-      reservation.id = id;
+    for (let i = 0; i < this.reservations.length; i++) {
+      if (this.reservations[i].id === id) {
+        this.reservations[i] = reservation;
+        this.reservations[i].id = id;
+        break;
+      }
     }
-    this.reservations[index] = reservation;
-    localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
 }

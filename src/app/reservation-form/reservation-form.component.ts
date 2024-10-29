@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ReservationFormComponent implements OnInit {
   reservationForm: FormGroup = new FormGroup({});
+  title: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,8 +29,11 @@ export class ReservationFormComponent implements OnInit {
     });
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
+      this.title = 'Edit Reservation';
       const reservation = this.reservationService.getSingleReservation(id);
       if (reservation) this.reservationForm.patchValue(reservation);
+    } else {
+      this.title = 'Create New Reservation';
     }
   }
 
